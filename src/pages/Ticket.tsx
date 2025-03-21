@@ -96,6 +96,7 @@ export default function Ticket() {
                         </button>
                     </div>
                 </div>
+                <div className='rounded-xl border border-[#E1E4EB] bg-white p-6 '></div>
             </div>
         </div>
     )
