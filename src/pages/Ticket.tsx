@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom'
+import React from 'react'
+// import { useParams } from 'react-router-dom'
 import Sidebar from '../components/Sidebar';
 import { IoChevronDownOutline } from "react-icons/io5";
 import { CiSearch } from "react-icons/ci";
@@ -18,8 +18,8 @@ const TicketNavbarButton = ({ children, className }: { children: React.ReactNode
 }
 
 export default function Ticket() {
-    const { userId, ticketId } = useParams();
-    const [isLoading, setIsLoading] = useState(false);
+    // const { userId, ticketId } = useParams();
+    // const [isLoading, setIsLoading] = useState(false);
 
     // useEffect(() => {
     //     if(!(userId && ticketId))return

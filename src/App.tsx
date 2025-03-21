@@ -1,4 +1,3 @@
-import React from 'react'
 import Login from './pages/Login'
 import { Route, Routes } from 'react-router-dom'
 import ViewAllTicket from './pages/ViewAllTicket'

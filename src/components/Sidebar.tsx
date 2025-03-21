@@ -1,4 +1,3 @@
-import React from 'react'
 import sidebarLogoSvg from "../assets/sidebar-logo.svg"
 import { FaRegChartBar } from "react-icons/fa";
 import { FaRegUser } from "react-icons/fa";

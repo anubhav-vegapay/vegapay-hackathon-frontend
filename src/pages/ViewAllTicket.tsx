@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import { useState } from 'react'
 import Sidebar from '../components/Sidebar'
 import { RxAvatar } from "react-icons/rx";
 import { Content, List, Root, Trigger } from '@radix-ui/react-tabs';
@@ -9,7 +9,7 @@ import {
   getCoreRowModel,
   useReactTable,
 } from '@tanstack/react-table'
-import axios from 'axios';
+// import axios from 'axios';
 
 const DEPARTMENTS = ["Department 1", "Department 2", "Department 3"]
 
@@ -113,6 +113,8 @@ const TabContent = ({ department } : { department: string}) => {
     columns,
     getCoreRowModel: getCoreRowModel()
   })
+
+  console.log(department, setData, setIsLoading)
 
   // useEffect(() => {
   //   (async () => {
