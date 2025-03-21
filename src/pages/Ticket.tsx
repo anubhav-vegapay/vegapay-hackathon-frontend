@@ -8,6 +8,8 @@ import { RxAvatar } from 'react-icons/rx';
 import { MdLocalPhone } from "react-icons/md";
 import lineSvg from "../assets/line.svg"
 import { CgMail } from "react-icons/cg";
+import shiedlCheckSvg from "../assets/shield-check.svg";
+import arrowRightSvg from "../assets/arrow-right.svg"
 
 const TicketNavbarButton = ({ children, className }: { children: React.ReactNode; className?: string }) => {
     return (
@@ -86,7 +88,13 @@ export default function Ticket() {
                             <p className='text-[#354356] text-xs '>7384927483920</p>
                         </div>
                     </div>
-                    <div></div>
+                    <div className='flex items-center space-x-1'>
+                        <button className='bg-[#F6E5FF] p-1 rounded'><img src={shiedlCheckSvg} alt="shiedlCheckSvg" /></button>
+                        <button className='px-4 py-1 bg-[#F6E5FF] rounded flex items-center gap-2'>
+                            <p className='text-[#5A189A] text-xs font-bold capitalize'>View more</p>
+                            <img src={arrowRightSvg} alt="arrowRightSvg" />
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
