@@ -1,0 +1,15 @@
+import React from 'react'
+import Login from './pages/Login'
+import { Route, Routes } from 'react-router-dom'
+import ViewAllTicket from './pages/ViewAllTicket'
+import Ticket from './pages/Ticket'
+
+export default function App() {
+  return (
+    <Routes>
+      <Route path='/login' element={<Login />} />
+      <Route path='/' element={<ViewAllTicket />} />
+      <Route path='/ticket/:userId/:ticketId' element={<Ticket />} />
+    </Routes>
+  )
+}
