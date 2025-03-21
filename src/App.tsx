@@ -1,7 +1,7 @@
 import Login from './pages/Login'
 import { Route, Routes } from 'react-router-dom'
 import ViewAllTicket from './pages/ViewAllTicket'
-import Ticket from './pages/Ticket'
+// import Ticket from './pages/Ticket'
 import { TicketDetails } from './pages/TicketDetails'
 
 export default function App() {

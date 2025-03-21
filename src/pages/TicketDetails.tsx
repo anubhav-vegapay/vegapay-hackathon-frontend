@@ -3,13 +3,11 @@ import AccountSummary from "../components/AccountSummary";
 import { TransactionsTable } from "../components/TransactionsTable";
 import { ChargesTable } from "../components/ChargesTable";
 import Sidebar from "../components/Sidebar";
-import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 
 export const TicketDetails = () => {
 
   const { userId, ticketId } = useParams();
-  const [isLoading, setIsLoading] = useState(false);
 
   if(!userId || !ticketId){
     return window.location.href = '/'

@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { StatusBadge } from "./StatusBadge";
 import axios from "axios";
 
 interface Charge {
