@@ -76,7 +76,7 @@ export default function CreateTicket() {
               <div><Button disabled={isLoading} type='submit' className='px-3 py-1'>Create Ticket</Button></div>
             </div>
             <div className='flex flex-col space-y-3 p-3'>
-              <div className='flex justify-between items-center'>
+              <div className='flex flex-col justify-between space-y-3'>
                 <div className='flex flex-col'>
                   <label htmlFor="account_number" className='text-gray-500 mb-2'>Account Number</label>
                   <select required id="account_number" name="account_number" defaultValue={USERID[0]} onChange={(e) => setForm((prev) => ({ ...prev, [e.target.name]: e.target.value }))}>
