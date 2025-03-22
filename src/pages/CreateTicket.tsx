@@ -8,14 +8,16 @@ import { Ticket, columns } from './ViewAllTicket'
 import { columnHelper } from './ViewAllTicket'
 import { flexRender, getCoreRowModel, useReactTable } from '@tanstack/react-table'
 
-const USERID = ["A12300560079", "ABC"]
+const USERID = ["A12300560079", "A12300560078",
+  "A12300560082",
+  "A12300560083"]
 
 const updatedColumns = [...columns, columnHelper.accessor(row => row.conversation.shift()?.agent_response, {
-    id: 'conversation',
-    cell: info => <i>{info.getValue()}</i>,
-    header: () => <span>Agent Response</span>,
-    footer: info => info.column.id,
-  }),]
+  id: 'conversation',
+  cell: info => <i>{info.getValue()}</i>,
+  header: () => <span>Agent Response</span>,
+  footer: info => info.column.id,
+}),]
 
 export default function CreateTicket() {
   const [data, setData] = useState<Ticket[]>([])
@@ -38,7 +40,7 @@ export default function CreateTicket() {
     e.preventDefault();
     try {
       setIsLoading(true);
-      await axios.post(import.meta.env.VITE_API_URL + '/create_ticket', { ...form , user_message: form.user_message.trim()})
+      await axios.post(import.meta.env.VITE_API_URL + '/create_ticket', { ...form, user_message: form.user_message.trim() })
       window.location.reload()
     } catch (error) {
       console.error(error)
