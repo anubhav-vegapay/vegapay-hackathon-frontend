@@ -5,15 +5,14 @@ interface StatusBadgeProps {
   
   export const StatusBadge: React.FC<StatusBadgeProps> = ({
     status,
-    variant = "default",
   }) => {
     const getVariantClasses = () => {
-      switch (variant) {
-        case "success":
+      switch (status) {
+        case "OPEN":
           return "text-green-600 bg-emerald-50";
-        case "error":
+        case "CLOSE":
           return "text-red-700 bg-rose-50";
-        case "warning":
+        case "PENDING":
           return "text-yellow-700 bg-yellow-50";
         default:
           return "text-gray-600 bg-gray-50";

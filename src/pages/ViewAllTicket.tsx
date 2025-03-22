@@ -1,4 +1,5 @@
-import { useState } from 'react'
+// @ts-ignore
+import { useEffect, useState } from 'react'
 import Sidebar from '../components/Sidebar'
 import { RxAvatar } from "react-icons/rx";
 import { Content, List, Root, Trigger } from '@radix-ui/react-tabs';
@@ -9,11 +10,14 @@ import {
   getCoreRowModel,
   useReactTable,
 } from '@tanstack/react-table'
-// import axios from 'axios';
+import axios from 'axios';
+import { useNavigate, useParams } from 'react-router-dom';
 
-const DEPARTMENTS = ["Department 1", "Department 2", "Department 3"]
+const DEPARTMENTS = ["OPERATIONS", "FRM", "RISK","PRODUCT"]
 
 export default function ViewAllTicket() {
+  const { userId } = useParams();
+
   return (
     <div className='bg-[#f7f7f7] flex h-screen w-screen'>
       <Sidebar />
@@ -29,7 +33,7 @@ export default function ViewAllTicket() {
               {DEPARTMENTS.map((department, index) => (<Trigger className='data-[state=active]:border-b data-[state=active]:border-b-[#5A189A] data-[state=active]:text-[#1047DC] cursor-pointer' value={`tab${index + 1}`}>{department}</Trigger>))}
             </List>
             <div className='border-b mb-3 border-b-[#E1E4EB]' />
-            {DEPARTMENTS.map((department,index) => (<Content key={`index-${index}`} value={`tab${index+1}`} className='w-full'><TabContent department={department} /></Content>))}
+            {DEPARTMENTS.map((department,index) => (<Content key={`index-${index}`} value={`tab${index+1}`} className='w-full'><TabContent userId={userId} department={department} /></Content>))}
           </Root>
         </div>
       </div>
@@ -37,98 +41,91 @@ export default function ViewAllTicket() {
   )
 }
 
-type Person = {
-  firstName: string
-  lastName: string
-  age: number
-  visits: number
-  status: string
-  progress: number
+export type Ticket = {
+  ticket_id: string;
+  account_id: string;
+  heading: string;
+  user_message: string;
+  response: {
+      inputTextTokenCount: number;
+      results: {
+          tokenCount: number;
+          outputText: string;
+          completionReason: string;
+      }[];
+  };
+  summary: string;
+  department: string;
+  conversation: any[];  // Adjust type if conversation structure is known
+  status: 'OPEN' | 'CLOSE' | 'PENDING';
+  created_at: string;  // ISO date string
+  sentiment: string;
 }
 
-const defaultData: Person[] = [
-  {
-    firstName: 'tanner',
-    lastName: 'linsley',
-    age: 24,
-    visits: 100,
-    status: 'In Relationship',
-    progress: 50,
-  },
-  {
-    firstName: 'tandy',
-    lastName: 'miller',
-    age: 40,
-    visits: 40,
-    status: 'Single',
-    progress: 80,
-  },
-  {
-    firstName: 'joe',
-    lastName: 'dirte',
-    age: 45,
-    visits: 20,
-    status: 'Complicated',
-    progress: 10,
-  },
-]
+const columnHelper = createColumnHelper<Ticket>()
 
-const columnHelper = createColumnHelper<Person>()
-
-const columns = [
-  columnHelper.accessor('firstName', {
-    cell: info => info.getValue(),
-    footer: info => info.column.id,
-  }),
-  columnHelper.accessor(row => row.lastName, {
-    id: 'lastName',
+export const columns = [
+  columnHelper.accessor(row => row.ticket_id, {
+    id: 'ticket_id',
     cell: info => <i>{info.getValue()}</i>,
-    header: () => <span>Last Name</span>,
+    header: () => <span>Ticket Id</span>,
     footer: info => info.column.id,
   }),
-  columnHelper.accessor('age', {
-    header: () => 'Age',
-    cell: info => info.renderValue(),
+  columnHelper.accessor(row => row.account_id, {
+    id: 'account_id',
+    cell: info => <i>{info.getValue()}</i>,
+    header: () => <span>Account Id</span>,
     footer: info => info.column.id,
   }),
-  columnHelper.accessor('visits', {
-    header: () => <span>Visits</span>,
+  columnHelper.accessor(row => row.heading, {
+    id: 'heading',
+    cell: info => <i>{info.getValue()}</i>,
+    header: () => <span>Heading</span>,
     footer: info => info.column.id,
   }),
-  columnHelper.accessor('status', {
-    header: 'Status',
+  columnHelper.accessor(row => row.status, {
+    id: 'status',
+    cell: info => <i>{info.getValue()}</i>,
+    header: () => <span>Status</span>,
     footer: info => info.column.id,
   }),
-  columnHelper.accessor('progress', {
-    header: 'Profile Progress',
+  columnHelper.accessor(row => row.created_at, {
+    id: 'created_at',
+    cell: info => <i>{info.getValue()}</i>,
+    header: () => <span>Created At</span>,
+    footer: info => info.column.id,
+  }),
+  columnHelper.accessor(row => row.sentiment, {
+    id: 'sentiment',
+    cell: info => <i>{info.getValue()}</i>,
+    header: () => <span>Sentiment</span>,
     footer: info => info.column.id,
   }),
 ]
 
-const TabContent = ({ department } : { department: string}) => {
-  const [data, setData] = useState<Person[]>(() =>  [...defaultData]);
+const TabContent = ({ department, userId } : { department: string; userId: string | undefined}) => {
+  const [data, setData] = useState<Ticket[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const table = useReactTable({
     data,
     columns,
     getCoreRowModel: getCoreRowModel()
   })
+  const navigate = useNavigate();
 
-  console.log(department, setData, setIsLoading)
-
-  // useEffect(() => {
-  //   (async () => {
-  //     try {
-  //       setIsLoading(true);
-  //       const { data } = await axios.get<Person[]>(`${import.meta.env.VITE_API_URL}/view-all-tickets?department_type=${department}`)
-  //       setData(data);
-  //     } catch (err) {
-  //       console.error(err)
-  //     } finally {
-  //       setIsLoading(false);
-  //     }
-  //   })()
-  // },[department])
+  useEffect(() => {
+    (async () => {
+      try {
+        setIsLoading(true);
+        const { data } = await axios.get<Ticket[]>(`${import.meta.env.VITE_API_URL}/get_tickets_by_department?department=${department}`)
+        setData(data);
+      } catch (err) {
+        console.error(err)
+      } finally {
+        setIsLoading(false);
+      }
+    })()
+  },[department])
 
   if(isLoading){
     return <p>Loading...</p>
@@ -147,15 +144,15 @@ const TabContent = ({ department } : { department: string}) => {
           ))}
         </thead>
         <tbody>
-          {table.getRowModel().rows.map(row => (
-            <tr key={row.id} className='border-t bg-white border-[#E1E4EB]'>
-              {row.getVisibleCells().map(cell => (
-                <td key={cell.id} className='p-3 border-r border-[#E1E4EB] text-[#151B23]'>
-                  {flexRender(cell.column.columnDef.cell,cell.getContext())}
-                </td>
-              ))}
-            </tr>
-          ))}
+          {table.getRowModel().rows.map(row => {
+            return (<tr key={row.id} className='border-t bg-white border-[#E1E4EB] cursor-pointer'  onClick={() => navigate(`/ticket/${userId}/${row.getVisibleCells().filter(e => e.id.includes('ticket_id'))[0].getValue()}`)} >
+            {row.getVisibleCells().map(cell => (
+              <td key={cell.id} className='p-3 border-r border-[#E1E4EB] text-[#151B23]'>
+                {flexRender(cell.column.columnDef.cell,cell.getContext())}
+              </td>
+            ))}
+          </tr>)
+          })}
         </tbody>
       </table>
     </div>

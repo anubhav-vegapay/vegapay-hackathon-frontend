@@ -27,7 +27,7 @@ export default function Login() {
         }
         // login
         if(form.email === "rocket@vegapay.tech" && form.password === "rocket@123"){
-            navigate("/")
+            navigate(`/A12300560079`)
         }else{
             alert("Invalid Credentials")
         }

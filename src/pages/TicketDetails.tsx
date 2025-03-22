@@ -17,7 +17,7 @@ export const TicketDetails = () => {
     <div className="bg-[#f7f7f7] flex h-screen w-screen">
       <Sidebar />
       <main className="w-full flex flex-col gap-2">
-      <TicketHeader />
+      <TicketHeader ticketId={ticketId} />
       <AccountSummary userId={userId} />
       <TransactionsTable userId={userId} />
       <ChargesTable userId={userId} />
