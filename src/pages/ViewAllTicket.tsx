@@ -56,13 +56,17 @@ export type Ticket = {
   };
   summary: string;
   department: string;
-  conversation: any[];  // Adjust type if conversation structure is known
+  conversation: {
+    agent_response: string;
+    user_message: string;
+    timestamp: string;
+  }[];  // Adjust type if conversation structure is known
   status: 'OPEN' | 'CLOSE' | 'PENDING';
   created_at: string;  // ISO date string
   sentiment: string;
 }
 
-const columnHelper = createColumnHelper<Ticket>()
+export const columnHelper = createColumnHelper<Ticket>()
 
 export const columns = [
   columnHelper.accessor(row => row.ticket_id, {

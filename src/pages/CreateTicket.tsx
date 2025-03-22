@@ -5,9 +5,17 @@ import Button from '../components/Button'
 import Input from '../components/Input'
 import axios from 'axios'
 import { Ticket, columns } from './ViewAllTicket'
+// import { columnHelper } from './ViewAllTicket'
 import { flexRender, getCoreRowModel, useReactTable } from '@tanstack/react-table'
 
 const USERID = ["A12300560079","ABC"]
+
+// const updatedColumns = [...columns, columnHelper.accessor(row => row.conversation, {
+//     id: 'conversation',
+//     cell: info => <i>{info.getValue().shift()?.agent_response}</i>,
+//     header: () => <span>Agent Response</span>,
+//     footer: info => info.column.id,
+//   }),]
 
 export default function CreateTicket() {
   const [data, setData] = useState<Ticket[]>([])
@@ -18,6 +26,7 @@ export default function CreateTicket() {
   })
   const table = useReactTable({
     data,
+    // columns: updatedColumns,
     columns,
     getCoreRowModel: getCoreRowModel()
   })
