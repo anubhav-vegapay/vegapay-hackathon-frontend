@@ -65,6 +65,7 @@ export type Ticket = {
   created_at: string;  // ISO date string
   sentiment: string;
   suggested_response: string;
+  churn_risk: string;
 }
 
 export const columnHelper = createColumnHelper<Ticket>()
@@ -104,6 +105,12 @@ export const columns = [
     id: 'sentiment',
     cell: info => <i>{info.getValue()}</i>,
     header: () => <span>Sentiment</span>,
+    footer: info => info.column.id,
+  }),
+  columnHelper.accessor(row => row.churn_risk, {
+    id: 'churn_risk',
+    cell: info => <i>{info.getValue()}</i>,
+    header: () => <span>Churn Risk</span>,
     footer: info => info.column.id,
   }),
 ]
