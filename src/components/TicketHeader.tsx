@@ -115,11 +115,7 @@ export const TicketHeader = ({ ticketId }: { ticketId: string }) => {
               Soft Response
             </h2>
             <p className="mt-4 text-xs leading-5 font-[450] text-slate-700">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque
-              ultrices eu mi at efficitur. In aliquet tristique nisi eu tincidunt.
-              Ut pretium varius tellus, a facilisis felis interdum ac.
-              Pellentesque dignissim sodales leo at scelerisque. In vel lorem vel
-              mi viverra scelerisque condimentum sit amet magna.
+              {ticket?.suggested_response}
             </p>
 
             <form onSubmit={handleSubmit}>

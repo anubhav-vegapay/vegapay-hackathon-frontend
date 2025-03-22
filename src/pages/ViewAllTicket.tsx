@@ -64,6 +64,7 @@ export type Ticket = {
   status: 'OPEN' | 'CLOSE' | 'PENDING';
   created_at: string;  // ISO date string
   sentiment: string;
+  suggested_response: string;
 }
 
 export const columnHelper = createColumnHelper<Ticket>()
